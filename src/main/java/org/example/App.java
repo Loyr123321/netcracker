@@ -32,12 +32,12 @@ public class App
         // Нажимаем кнопку входа
         WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
         loginButton.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         WebElement passwordField = driver.findElement(By.xpath("//input[@name='password']"));
         passwordField.sendKeys("Fahuzoandrei_71");
         WebElement loginButton2 = driver.findElement(By.xpath("//button[@type='submit']"));
         loginButton2.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         if ((driver.findElement(By.xpath("//input[@name='password']")))!= null)
         {
             WebElement passwordField2 = driver.findElement(By.xpath("//input[@name='password']"));
@@ -47,31 +47,38 @@ public class App
             WebElement loginButton3 = driver.findElement(By.xpath("//button[@type='submit']"));
             loginButton3.click();
         }
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         WebElement ol = driver.findElement(By.tagName("ol"));
         List<WebElement> liElements = ol.findElements(By.tagName("li"));
 
         int i=0;
 
         // Проходим по каждому элементу списка и кликаем на него
-        for (WebElement li : liElements) {
-            WebElement a = li.findElement(By.tagName("a"));
-            a.click();
-            try {
-                Thread.sleep(1000); // ждать 1 секунду
-                File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-                try {
-                    FileUtils.copyFile(screenshot, new File("path_to_save_screenshot" + i + ".png"));
-                    i++;
-                } catch (IOException e) {
-                    //error
-                }
+        WebElement menu = driver.findElement(By.className("LeftMenuOld-module__container--tHFVR"));
+        List<WebElement> menuItems = menu.findElements(By.tagName("a"));
 
-                driver.navigate().back();
-            } catch (InterruptedException e) {
-                // обработка исключения
+        // Проходим по каждому элементу меню, переходим на страницу и делаем скриншот
+
+        for (WebElement menuItem : menuItems)
+        {
+            if (i==8) {
+            break;
             }
+                menuItem.click();
+                Thread.sleep(2000);
+                File screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+                try {
+                    FileUtils.copyFile(screenshotFile, new File("screenshot_" + menuItem.getText() + ".png"));
+                } catch (IOException e) {
+                    // обработка исключения
+                }
+            i++;
         }
+
+
+
+
+
 
 
         driver.quit();
