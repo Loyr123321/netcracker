@@ -37,12 +37,12 @@ public class App
         passwordField.sendKeys("Fahuzoandrei_71");
         WebElement loginButton2 = driver.findElement(By.xpath("//button[@type='submit']"));
         loginButton2.click();
-
+        Thread.sleep(1000);
         if ((driver.findElement(By.xpath("//input[@name='password']")))!= null)
         {
-            WebElement passwordField2 = driver.findElement(By.xpath("//input[@type='password']"));
+            WebElement passwordField2 = driver.findElement(By.xpath("//input[@name='password']"));
             passwordField2.sendKeys("Fahuzoandrei_71");
-            WebElement passwordField3 = driver.findElement(By.xpath("//input[@type='password']"));
+            WebElement passwordField3 = driver.findElement(By.xpath("//input[@name='password_confirm']"));
             passwordField3.sendKeys("Fahuzoandrei_71");
             WebElement loginButton3 = driver.findElement(By.xpath("//button[@type='submit']"));
             loginButton3.click();
@@ -72,36 +72,25 @@ public class App
                 // обработка исключения
             }
         }
-        // Прокликиваем разделы главной страницы и сохраняем скриншоты
-//        String[] sections = {"Моя страница", "Мои друзья", "Мои фотографии"};
-//        for (String section : sections) {
-//            WebElement sectionLink = driver.findElement(By.linkText(section));
-//            sectionLink.click();
+
+
+        driver.quit();
+    }
+//    private static void navigateAndCaptureScreenshots(WebDriver driver) {
+//        // Пример: переход на страницу "Мои друзья" и сохранение скриншота
+//        driver.get("https://vk.com/friends");
+//        WebElement olElement = driver.findElement(By.xpath("//nav//ol"));
+//        list = ()olElement.findElements(By.tagName("li"));
+//        takeScreenshot(driver, "MyFriends");
 //
-//        }
-//
-//        // Размещаем запись на стене
-//        WebElement wallPostField = driver.findElement(By.id("post_field"));
-//        wallPostField.sendKeys("Я учусь в Учебном центре Netcracker Тольятти https://vk.com/infocom_tlt");
-//        WebElement postButton = driver.findElement(By.id("send_post"));
-//        postButton.click();
-//
-//        // Проверяем, что запись появилась на стене
-//        WebElement wallPost = driver.findElement(By.xpath("//div[contains(@class, 'wall_post_text')]"));
-//        String postText = wallPost.getText();
-//        if (postText.equals("Я учусь в Учебном центре Netcracker Тольятти https://vk.com/infocom_tlt")) {
-//            System.out.println("Запись успешно размещена на стене");
-//        } else {
-//            System.out.println("Ошибка размещения записи на стене");
-//        }
-//
-//        // Изменяем личные данные пользователя
-//        // ...
-//
-//        // Проверяем, что изменения вступили в силу
-//        // ...
-//
-//        // Закрываем браузер
-//        driver.quit();
+//        // Повторите этот блок для других разделов
+//    }
+    private static void takeScreenshot(WebDriver driver, String fileName) {
+        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshotFile, new File("путь_к_папке/" + fileName + ".png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
