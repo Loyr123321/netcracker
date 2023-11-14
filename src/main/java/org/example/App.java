@@ -1,15 +1,12 @@
 package org.example;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.By;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.io.FileUtils;
 
@@ -57,11 +54,11 @@ public class App
         WebElement menu = driver.findElement(By.className("LeftMenuOld-module__container--tHFVR"));
         List<WebElement> menuItems = menu.findElements(By.tagName("a"));
 
-        // Проходим по каждому элементу меню, переходим на страницу и делаем скриншот
+//         Проходим по каждому элементу меню, переходим на страницу и делаем скриншот
 
         for (WebElement menuItem : menuItems)
         {
-            if (i==8) {
+            if (i==2) {
             break;
             }
                 menuItem.click();
@@ -74,30 +71,44 @@ public class App
                 }
             i++;
         }
-
-
-
-
-
-
-
-        driver.quit();
-    }
-//    private static void navigateAndCaptureScreenshots(WebDriver driver) {
-//        // Пример: переход на страницу "Мои друзья" и сохранение скриншота
-//        driver.get("https://vk.com/friends");
-//        WebElement olElement = driver.findElement(By.xpath("//nav//ol"));
-//        list = ()olElement.findElements(By.tagName("li"));
-//        takeScreenshot(driver, "MyFriends");
-//
-//        // Повторите этот блок для других разделов
-//    }
-    private static void takeScreenshot(WebDriver driver, String fileName) {
-        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        WebElement myPage = driver.findElement(By.partialLinkText("Моя страница"));
+        myPage.click();
+        Thread.sleep(2000);
+        WebElement postField = driver.findElement(By.id("post_field"));
+        postField.sendKeys("Я учусь в Учебном центре Netcracker Тольятти https://vk.com/infocom_tlt");
+        Thread.sleep(3000);
+        WebElement submit = driver.findElement(By.id("send_post"));
+        submit.click();
+        driver.navigate().refresh();
+        String text = "Я учусь в Учебном центре Netcracker Тольятти https://vk.com/infocom_tlt";
         try {
-            FileUtils.copyFile(screenshotFile, new File("путь_к_папке/" + fileName + ".png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Thread.sleep(1000);
+//           driver.findElement(By.partialLinkText("Я учусь в Учебном центре Netcracker Тольятти https://vk.com/infocom_tlt"));
+            WebElement post = driver.findElement(By.className("wall_post_text"));
+            if (Objects.equals(post.getText(), text)){
+                System.out.println("Текст с постом");
+            }
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Нет текста с постом");
         }
+
+        driver.navigate().to("https://vk.com/edit");
+        Thread.sleep(2000);
+        WebElement aboutMe = driver.findElement(By.id("pedit_general_short_information"));
+        aboutMe.sendKeys("developer");
+        WebElement save = driver.findElement(By.className("FlatButton__content"));
+        save.click();
+        Thread.sleep(2000);
+        WebElement myPage2 = driver.findElement(By.partialLinkText("Моя страница"));
+        myPage2.click();
+        Thread.sleep(2000);
+        try {
+            driver.findElement(By.xpath("//span[contains(text(), 'developer')]"));
+            System.out.println("Статус есть");
+        } catch (NoSuchElementException e) {
+            System.out.println("Нет статуса");
+        }
+        driver.quit();
     }
 }
