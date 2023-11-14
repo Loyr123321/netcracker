@@ -22,7 +22,7 @@ public class App
         driver.get("https://vk.com/feed");
 
         WebElement loginField = driver.findElement(By.id("index_email"));
-        loginField.sendKeys("shev4enko.andrey-ru@yandex.ru");
+        loginField.sendKeys("Вставьте логин");
 
 
 
@@ -31,16 +31,16 @@ public class App
         loginButton.click();
         Thread.sleep(2000);
         WebElement passwordField = driver.findElement(By.xpath("//input[@name='password']"));
-        passwordField.sendKeys("Fahuzoandrei_71");
+        passwordField.sendKeys("Пароль");
         WebElement loginButton2 = driver.findElement(By.xpath("//button[@type='submit']"));
         loginButton2.click();
         Thread.sleep(2000);
         if ((driver.findElement(By.xpath("//input[@name='password']")))!= null)
         {
             WebElement passwordField2 = driver.findElement(By.xpath("//input[@name='password']"));
-            passwordField2.sendKeys("Fahuzoandrei_71");
+            passwordField2.sendKeys("Пароль");
             WebElement passwordField3 = driver.findElement(By.xpath("//input[@name='password_confirm']"));
-            passwordField3.sendKeys("Fahuzoandrei_71");
+            passwordField3.sendKeys("Пароль");
             WebElement loginButton3 = driver.findElement(By.xpath("//button[@type='submit']"));
             loginButton3.click();
         }
